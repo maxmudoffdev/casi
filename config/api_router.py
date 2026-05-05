@@ -1,6 +1,8 @@
 from django.conf import settings
 from rest_framework.routers import DefaultRouter
 from rest_framework.routers import SimpleRouter
+from django.urls import path, include
+
 
 from casi.users.api.views import UserViewSet
 
@@ -11,3 +13,10 @@ router.register("users", UserViewSet)
 
 app_name = "api"
 urlpatterns = router.urls
+
+urlpatterns += [
+    path("authors/",include("casi.authors.api.urls"))
+]
+
+
+
