@@ -4,9 +4,6 @@ from casi.common.models import TimeStampModel
 
 
 # Create your models here.
-
-
-
 class Journal(TimeStampModel):
     name = models.CharField(max_length=200,unique=True)
     description = models.TextField(blank=True,null=True)
@@ -21,14 +18,9 @@ class Journal(TimeStampModel):
         verbose_name_plural = 'Journals'
 
 
-
-
-
-
 class JournalRequirements(TimeStampModel):
     journal = models.OneToOneField(Journal,on_delete=models.CASCADE,related_name='requirements')
     content = models.JSONField(default=dict)
-
 
 
 

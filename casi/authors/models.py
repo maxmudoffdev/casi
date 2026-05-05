@@ -1,7 +1,6 @@
 from django.db import models
 
 from casi.common.models import TimeStampModel
-from casi.users.models import User
 
 
 # Create your models here.

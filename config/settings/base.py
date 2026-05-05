@@ -95,6 +95,7 @@ LOCAL_APPS = [
     "casi.users",
     "casi.articles",
     "casi.authors",
+    "casi.journals",
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
