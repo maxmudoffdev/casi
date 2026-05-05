@@ -7,8 +7,7 @@ import  re
 class AuthorSerializers(serializers.ModelSerializer):
     class Meta:
         model = Author
-        fields = ["first_name","last_name","affiliation","email","orc_id"]
-
+        fields = ["id","first_name","last_name","affiliation","email","orc_id"]
 
     def validate(self, attrs):
         first_name = attrs.get("first_name")
