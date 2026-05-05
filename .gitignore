@@ -327,3 +327,7 @@ mailpit
 casi/media/
 
 .pytest_cache/
+
+.envs
+
+.idea
