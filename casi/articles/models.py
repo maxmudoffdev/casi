@@ -1,4 +1,3 @@
-from tkinter.constants import CASCADE
 
 from django.db import models
 
@@ -13,7 +12,7 @@ class Article(TimeStampModel):
     author = models.ManyToManyField(
         ...
     )
-    doi = models.CharField(blank=True,null=True)
+    doi = models.CharField(max_length=100, blank=True, null=True)
     keys = models.ManyToManyField(
         "Keys",related_name='articles'
     )
@@ -27,6 +26,11 @@ class Article(TimeStampModel):
     status = models.CharField(max_length=20, default='draft')
     category = models.ManyToManyField("Category",related_name="articles")
 
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Article'
+        verbose_name_plural = 'Articles'
+
     def __str__(self):
         return self.title
 
@@ -35,13 +39,21 @@ class ArticleReferences(TimeStampModel):
     article = models.ForeignKey(Article,on_delete=models.CASCADE)
     reference_name = models.TextField()
 
+    class Meta:
+        verbose_name = 'Article Reference'
+        verbose_name_plural = 'Article References'
+
     def __str__(self):
         return self.reference_name
 
 
 class Keys(TimeStampModel):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
 
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Keyword'
+        verbose_name_plural = 'Keywords'
 
     def __str__(self):
         return self.name
@@ -49,7 +61,12 @@ class Keys(TimeStampModel):
 
 
 class Category(TimeStampModel):
-    name = models.CharField(max_length=200,blank=True,null=True)
+    name = models.CharField(max_length=200, unique=True)
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
