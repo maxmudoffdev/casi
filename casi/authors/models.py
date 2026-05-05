@@ -10,7 +10,7 @@ class Author(TimeStampModel):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     affiliation = models.CharField(max_length=200)
-    email = models.EmailField(blank=True,null=True)
+    email = models.EmailField(unique=True)
     orc_id = models.CharField(max_length=19,blank=True,null=True,unique=True)
 
     class Meta:
@@ -20,4 +20,7 @@ class Author(TimeStampModel):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
 

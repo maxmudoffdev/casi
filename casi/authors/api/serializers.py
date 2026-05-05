@@ -11,13 +11,15 @@ class AuthorSerializers(serializers.ModelSerializer):
 
     def validate(self, attrs):
         first_name = attrs.get("first_name")
-        if first_name is None or len(first_name) < 4:
-            raise serializers.ValidationError("First name is not None and First name character must much 4")
-        attrs['first_name'] = first_name.strip().capitalize()
+        if first_name is not None:
+            if len(first_name) < 4:
+                raise serializers.ValidationError("First name is not None and First name character must much 4")
+            attrs['first_name'] = first_name.strip().capitalize()
         last_name = attrs.get("last_name")
-        if last_name is None or len(last_name) < 4:
-            raise serializers.ValidationError("Last name is not None and Last name character must much 4")
-        attrs['last_name'] = last_name.strip().capitalize()
+        if last_name is not None:
+            if len(last_name) < 4:
+                raise serializers.ValidationError("Last name is not None and Last name character must much 4")
+            attrs['last_name'] = last_name.strip().capitalize()
         email = attrs.get("email")
         if email:
             email = email.lower().strip()
@@ -25,7 +27,10 @@ class AuthorSerializers(serializers.ModelSerializer):
                 validate_email(email)
             except DjangoValidationError:
                 raise serializers.ValidationError("Enter a valid email address.")
-            if Author.objects.filter(email=email).exists():
+            instance = getattr(self, 'instance', None)
+            if Author.objects.filter(email=email).exclude(
+                pk=instance.pk if instance else None
+            ).exists():
                 raise serializers.ValidationError("This email is already in use.")
             attrs['email'] = email
         affiliation = attrs.get("affiliation")
@@ -43,7 +48,7 @@ class AuthorSerializers(serializers.ModelSerializer):
                 raise serializers.ValidationError("Invalid ORCID format. Expected: 0000-0000-0000-0000")
             if Author.objects.filter(orc_id=orc_id).exists():
                 raise serializers.ValidationError("This ORCID is already in use.")
-            attrs['orcid'] = orc_id
+            attrs['orc_id'] = orc_id
 
         return attrs
 
