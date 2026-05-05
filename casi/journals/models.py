@@ -26,7 +26,7 @@ class Journal(TimeStampModel):
 
 
 class JournalRequirements(TimeStampModel):
-    journal = models.OneToOneField(Journal,on_delete=models.CASCADE)
+    journal = models.OneToOneField(Journal,on_delete=models.CASCADE,related_name='requirements')
     content = models.JSONField(default=dict)
 
 
