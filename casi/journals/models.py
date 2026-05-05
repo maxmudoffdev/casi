@@ -29,7 +29,7 @@ class Volume(TimeStampModel):
         Journal,on_delete=models.CASCADE,
         related_name='volumes'
     )
-    number = models.IntegerField(max_length=128)
+    number = models.IntegerField()
     issue = models.CharField(max_length=20)
     year = models.IntegerField()
     published_date = models.DateField(blank=True,null=True)
