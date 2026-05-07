@@ -8,6 +8,8 @@ class AuthorSerializers(serializers.ModelSerializer):
     class Meta:
         model = Author
         fields = ["id","first_name","last_name","affiliation","email","orc_id"]
+        read_only = ["created_at"]
+
 
     def validate(self, attrs):
         first_name = attrs.get("first_name")
