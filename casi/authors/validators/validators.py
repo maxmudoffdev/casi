@@ -1,27 +1,28 @@
 import re
 from django.core.exceptions import ValidationError
-from casi.authors.validators.func import check_not_xss, chek_not_none_or_emppty, check_short
+from casi.authors.validators.func import check_not_xss, chek_not_none_or_emppty, check_short, check_number_or_letter
 
 
 def valideate_firstname(value:str) -> None:
-    chek_not_none_or_emppty(value,"Name")
-    check_short(value,"Name")
-    check_not_xss(value,"name")
+    chek_not_none_or_emppty(value,"Firstname")
+    check_short(value,"Firstname")
+    check_not_xss(value,"Firstname")
+    check_number_or_letter(value,"Firstname")
 
-    if not re.match(r"^[\w\s'\-À-ÿА-яЁё]+$", value):
-        raise ValidationError("Name contains invalid characters.", code="invalid_name")
+
 def valideate_lastname(value:str) -> None:
-    chek_not_none_or_emppty(value,"Name")
-    check_short(value,"Name")
-    check_not_xss(value,"name")
+    chek_not_none_or_emppty(value,"Lastname")
+    check_short(value,"Lastname")
+    check_not_xss(value,"Lastname")
+    check_number_or_letter(value,"Lastname")
 
-    if not re.match(r"^[\w\s'\-À-ÿА-яЁё]+$", value):
-        raise ValidationError("Name contains invalid characters.", code="invalid_name")
+
 
 def validate_affilation(value: str) -> None:
     chek_not_none_or_emppty(value, "Affliation")
     check_short(value, "Affliation")
     check_not_xss(value, "Affliation")
+    check_number_or_letter(value,"Affliation")
 
 
 
