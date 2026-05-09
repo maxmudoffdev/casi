@@ -14,7 +14,7 @@ class Author(TimeStampModel):
     id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     first_name = models.CharField(max_length=200,validators=[valideate_firstname])
     last_name = models.CharField(max_length=200,validators=[valideate_lastname])
-    affiliation = models.CharField(max_length=20,validators=[validate_affilation])
+    affiliation = models.CharField(max_length=200,validators=[validate_affilation])
     email = models.EmailField(unique=True,validators=[validate_email])
     orc_id = models.CharField(max_length=19,blank=True,null=True,unique=True,validators=[validate_orcid])
     is_active = models.BooleanField(default=True)
