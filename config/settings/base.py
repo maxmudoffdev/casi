@@ -345,12 +345,27 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # filter
 
     "DEFAULT_FILTER_BACKENDS": [
             "django_filters.rest_framework.DjangoFilterBackend",
             "rest_framework.filters.SearchFilter",
             "rest_framework.filters.OrderingFilter",
         ],
+    # Pagination
+
+    "DEFAULT_PAGINATION_CLASS": "casi.authors.api.pagination.AuthorPagination",  # ← qo'shing
+    "PAGE_SIZE": 20,
+    # Throlling
+
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "30/minute",  # anonim — 30 ta/daqiqa
+        "user": "100/minute",  # user   — 100 ta/daqiqa
+    }
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
