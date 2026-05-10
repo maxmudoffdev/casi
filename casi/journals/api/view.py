@@ -1,0 +1,68 @@
+from django.shortcuts import get_object_or_404
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+
+from casi.journals.api.filters import JournalFilter
+from casi.journals.api.serializers import JournalSerialziers
+from casi.journals.models import Journal
+from casi.journals.pagination import JournalPagination
+
+
+class AllJournalView(APIView):
+    permission_classes = [AllowAny]
+    def get(self,request):
+        journal = Journal.objects.all()
+        filterset = JournalFilter(request.GET,queryset=journal)
+        if filterset.is_valid():
+            journal = filterset.qs
+        paginator = JournalPagination()
+        page = paginator.paginate_queryset(journal,request)
+        serializers = JournalSerialziers(page,many=True,context={"request": request})
+        return paginator.get_paginated_response(serializers.data)
+
+    def post(self, request):
+        serializers = JournalSerialziers(data=request.data)
+        serializers.is_valid(raise_exception=True)
+        serializers.save()
+
+        return Response(
+            {
+                "message": "Journal created",
+                "data": serializers.data
+            },
+            status=status.HTTP_201_CREATED
+        )
+class JournalDetailView(APIView):
+    permission_classes = [AllowAny]
+    def get(self,request,slug):
+        journal = get_object_or_404(Journal,slug=slug)
+        seralizers = JournalSerialziers(journal)
+        return Response(
+            seralizers.data,
+            status=status.HTTP_200_OK
+        )
+
+    def patch(self, request, slug):
+        journal = get_object_or_404(Journal, slug=slug)
+        seralizers = JournalSerialziers(journal,data=request.data,partial=True,context={"request": request})
+        seralizers.is_valid(raise_exception=True)
+        seralizers.save()
+
+        return Response(
+            {
+                "message": "Journal updated",
+                "data": seralizers.data
+            },
+
+            status=status.HTTP_200_OK
+        )
+    def delete(self, request, slug):
+        journal = get_object_or_404(Journal, slug=slug)
+        journal.is_active = False
+        journal.save()
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
+        )

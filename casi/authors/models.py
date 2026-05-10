@@ -11,7 +11,6 @@ from django.contrib.postgres.indexes import GinIndex
 
 
 class Author(TimeStampModel):
-    id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     first_name = models.CharField(max_length=200,validators=[valideate_firstname])
     last_name = models.CharField(max_length=200,validators=[valideate_lastname])
     affiliation = models.CharField(max_length=200,validators=[validate_affilation])

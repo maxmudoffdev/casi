@@ -1,6 +1,7 @@
 import io
 
 from django.shortcuts import get_object_or_404
+from docutils.nodes import authors
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -36,10 +37,15 @@ class AllAuthorView(APIView):
         return paginator.get_paginated_response(serializers.data)
 
     def post(self,request):
-        serializers = AuthorSerializersPrivate(data=request.data)
+        many = isinstance(request.data,list)
+        serializers = AuthorSerializersPrivate(data=request.data,many=True)
         serializers.is_valid(raise_exception=True)
-        authors = [Author(**item) for item in serializers.validated_data]
-        Author.objects.bulk_create(authors)
+        if many:
+            authors = [Author(**item) for item in serializers.validated_data]
+            Author.objects.bulk_create(authors)
+
+        else:
+            serializers.save()
         res_data = {
                 "message":"Author is created",
                 "data":serializers.data
