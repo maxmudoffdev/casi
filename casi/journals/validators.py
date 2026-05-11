@@ -1,4 +1,4 @@
-from casi.authors.validators.func import chek_not_none_or_emppty,check_short,check_not_xss,check_number_or_letter
+from casi.common.func import chek_not_none_or_emppty,check_short,check_not_xss,check_number_or_letter
 import re
 from django.core.exceptions import ValidationError
 import json

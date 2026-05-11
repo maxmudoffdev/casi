@@ -1,6 +1,6 @@
 import re
 from django.core.exceptions import ValidationError
-from casi.authors.validators.func import check_not_xss, chek_not_none_or_emppty, check_short, check_number_or_letter
+from casi.common.func import check_not_xss, chek_not_none_or_emppty, check_short, check_number_or_letter
 
 
 def valideate_firstname(value:str) -> None:

@@ -3,10 +3,12 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+
+from casi.common.paginator import BasePagination
 from casi.journals.api.filters import JournalFilter
 from casi.journals.api.serializers import JournalSerialziers, VolumeSerialziers,JournalRequirementsSerilizers
 from casi.journals.models import Journal, Volume,JournalRequirements
-from casi.journals.pagination import JournalPagination
+
 
 
 class AllJournalView(APIView):
@@ -16,7 +18,7 @@ class AllJournalView(APIView):
         filterset = JournalFilter(request.GET,queryset=journal)
         if filterset.is_valid():
             journal = filterset.qs
-        paginator = JournalPagination()
+        paginator = BasePagination()
         page = paginator.paginate_queryset(journal,request)
         serializers = JournalSerialziers(page,many=True,context={"request": request})
         return paginator.get_paginated_response(serializers.data)

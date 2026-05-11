@@ -7,23 +7,25 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import  status
 from casi.authors.api.filters import AuthorFilter
-from casi.authors.api.pagination import AuthorPagination
+
 from casi.authors.api.serializers import AuthorSerializersPrivate
 from casi.authors.models import Author
 import pandas as pd
 from django.http import HttpResponse
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 
+from casi.common.paginator import BasePagination
+
 
 class AllAuthorView(APIView):
     permission_classes = [AllowAny]
-    pagination_class = AuthorPagination
+    pagination_class = BasePagination
     def get(self,request):
         queryset = Author.objects.all()
         filterset = AuthorFilter(request.GET, queryset=queryset)
         if filterset.is_valid():
             queryset = filterset.qs
-        paginator = AuthorPagination()
+        paginator = BasePagination()
 
         ordering = request.query_params.get("ordering","first_name")
         allowed = ["last_name", "first_name","email", "created_at", "-last_name", "-first_name", "-created_at"]

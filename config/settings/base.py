@@ -98,6 +98,7 @@ LOCAL_APPS = [
     "casi.articles",
     "casi.authors",
     "casi.journals",
+    "casi.submission"
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -354,7 +355,7 @@ REST_FRAMEWORK = {
         ],
     # Pagination
 
-    "DEFAULT_PAGINATION_CLASS": "casi.authors.api.pagination.AuthorPagination",  # ← qo'shing
+    "DEFAULT_PAGINATION_CLASS": "casi.common.paginator.BasePagination",
     "PAGE_SIZE": 20,
     # Throlling
 
@@ -363,8 +364,8 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "30/minute",  # anonim — 30 ta/daqiqa
-        "user": "100/minute",  # user   — 100 ta/daqiqa
+        "anon": "30/minute",
+        "user": "100/minute",
     }
 }
 

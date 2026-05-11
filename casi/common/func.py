@@ -26,3 +26,4 @@ def check_number_or_letter(value:str,field):
             f"{field} must contain letters only.",
             code="invalid_name"
         )
+

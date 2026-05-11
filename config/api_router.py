@@ -17,6 +17,7 @@ urlpatterns = router.urls
 urlpatterns += [
     path("authors/",include("casi.authors.api.urls")),
     path("journals/", include("casi.journals.api.urls")),
+    path("submission/", include("casi.submission.api.urls")),
 ]
 
 
