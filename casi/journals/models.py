@@ -1,6 +1,7 @@
 from django.db import models
 from casi.common.models import TimeStampModel
-from casi.journals.validators import validate_name, validate_image_or_logo, validate_issn, validate_issue
+from casi.journals.validators import validate_name, validate_image_or_logo, validate_issn, validate_issue, \
+    validate_requirements_content
 from django.utils.text import slugify
 
 
@@ -28,7 +29,7 @@ class Journal(TimeStampModel):
 
 class JournalRequirements(TimeStampModel):
     journal = models.OneToOneField(Journal,on_delete=models.CASCADE,related_name='requirements')
-    content = models.JSONField(default=dict)
+    content = models.JSONField(default=dict,validators=[validate_requirements_content])
 
     def __str__(self):
         return  self.journal.name

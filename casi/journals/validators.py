@@ -1,7 +1,7 @@
 from casi.authors.validators.func import chek_not_none_or_emppty,check_short,check_not_xss,check_number_or_letter
 import re
 from django.core.exceptions import ValidationError
-
+import json
 def validate_name(value:str) -> None:
     chek_not_none_or_emppty(value,"Name")
     check_short(value,"Name")
@@ -41,3 +41,26 @@ def validate_issue(value: str) -> None:
             "Invalid issue format.",
             code="invalid_issue"
         )
+
+def validate_requirements_content(value: dict) -> None:
+    if not value:
+        raise ValidationError("Requirements cannot be empty.")
+
+    if not isinstance(value.get("max_pages"), int):
+        raise ValidationError("max_pages must be integer.")
+
+    if value.get("max_pages", 0) <= 0:
+        raise ValidationError("max_pages must be positive.")
+
+    if not isinstance(value.get("languages"), list):
+        raise ValidationError("languages must be a list.")
+
+    content_str = json.dumps(value)
+    if re.search(r"[<>]", content_str):
+        raise ValidationError("Content contains invalid characters.")
+
+    if len(content_str) > 10000:
+        raise ValidationError("Content is too large.")
+
+    if value.get("keywords_min", 0) > value.get("keywords_max", 0):
+        raise ValidationError("keywords_min > keywords_max.")
