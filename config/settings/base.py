@@ -98,7 +98,8 @@ LOCAL_APPS = [
     "casi.articles",
     "casi.authors",
     "casi.journals",
-    "casi.submission"
+    "casi.submission",
+    "casi.reviews"
 
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

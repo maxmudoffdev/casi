@@ -18,6 +18,7 @@ urlpatterns += [
     path("authors/",include("casi.authors.api.urls")),
     path("journals/", include("casi.journals.api.urls")),
     path("submission/", include("casi.submission.api.urls")),
+    path("reviews/", include("casi.reviews.api.urls")),
 ]
 
 
