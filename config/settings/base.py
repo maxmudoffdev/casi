@@ -11,11 +11,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # casi/
 APPS_DIR = BASE_DIR / "casi"
 env = environ.Env()
-
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-if READ_DOT_ENV_FILE:
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(BASE_DIR / ".env"))
+env.read_env(str(BASE_DIR / ".env"))
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -397,3 +393,4 @@ SPECTACULAR_SETTINGS = {
 }
 # Your stuff...
 # ------------------------------------------------------------------------------
+TELEGRAM_BOT_TOKEN="8765720511:AAFYx3YZ5GYRhIifB_PiXCQvI8tDG2Zv0Xs"

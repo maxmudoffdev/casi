@@ -12,8 +12,8 @@ from django.conf import settings
 
 logging.basicConfig(level=logging.INFO)
 
-Token = "8765720511:AAFYx3YZ5GYRhIifB_PiXCQvI8tDG2Zv0Xs"
-bot = Bot(token=Token)
+
+bot = Bot(token=settings.TELEGRAM_BOT_TOKEN)
 dp = Dispatcher()
 
 
