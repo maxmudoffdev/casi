@@ -45,7 +45,7 @@ class ReviewSerailizers(serializers.ModelSerializer):
 class ReviewAssigmentSerializer(serializers.ModelSerializer):
     submission = SubmissionSerializers(read_only=True)
     submission_id = serializers.CharField(write_only=True)
-    reviewer = UserSerializer(read_only=True)
+    reviewer = ReviewSerailizers(read_only=True)
     reviewer_id = serializers.CharField(write_only=True)
     asigment_by = UserSerializer(read_only=True)
     asigment_by_id = serializers.CharField(write_only=True)
@@ -61,6 +61,7 @@ class ReviewAssigmentSerializer(serializers.ModelSerializer):
             "asigment_by",
             "asigment_by_id",
             "deadline",
+            "status"
 
             )
 

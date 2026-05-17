@@ -329,5 +329,6 @@ casi/media/
 .pytest_cache/
 
 .envs
+.env
 
 .idea

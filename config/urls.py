@@ -17,7 +17,6 @@ urlpatterns = [
         name="about",
     ),
     path(settings.ADMIN_URL, admin.site.urls),
-    path("users/", include("casi.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
 
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),

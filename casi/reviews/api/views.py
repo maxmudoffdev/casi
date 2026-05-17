@@ -6,7 +6,8 @@ from rest_framework import status
 
 from casi.common.paginator import BasePagination
 from casi.reviews.api.serializers import ReviewSerailizers, ReviewAssigmentSerializer
-from casi.reviews.models import Review,ReviewAssigment
+from casi.reviews.api.state_machine import transition_assignment
+from casi.reviews.models import Review, ReviewAssigment, AssigmentStatus
 
 
 class AllReviewView(APIView):
@@ -138,6 +139,30 @@ class ReviewAssigmenDetailtView(APIView):
 
 
 
+class AssignmentTransitionView(APIView):
+    permission_classes = [AllowAny]
+    transition_to = None
+
+    def post(self, request, id):
+        assignment = get_object_or_404(ReviewAssigment, id=id)
+        try:
+            transition_assignment(assignment, self.transition_to)
+        except ValueError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"message": f"Status changed to {self.transition_to}"},
+            status=status.HTTP_200_OK
+        )
+
+
+class AssignmentAcceptView(AssignmentTransitionView):
+    transition_to = AssigmentStatus.ACCEPTED
+
+class AssignmentDeclineView(AssignmentTransitionView):
+    transition_to = AssigmentStatus.DECLINED
+
+class AssignmentCompleteView(AssignmentTransitionView):
+    transition_to = AssigmentStatus.COMPLETED
 
 
 
